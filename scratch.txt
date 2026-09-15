@@ -1,0 +1,36 @@
+#include "../../include/config.h"
+
+// Include all headers relative to the sketch folder, 
+// since the Arduino IDE compiles files in the sketch folder, but for src/ we might need to specify the path or adjust include paths.
+// Actually, Arduino IDE typically compiles files in the `src/` subfolder of the sketch if the project is organized as:
+// sketch_name/
+//   sketch_name.ino
+//   src/
+//     ...
+// But here we have:
+// firmware/umamba/umamba.ino
+// src/...
+// include/...
+// Arduino IDE does not automatically compile sources from a sibling `src` directory unless they are in a library or we include the .cpp files directly (not recommended) or we restructure.
+// Let's check how the user's project structure works with arduino-cli. 
+// Arduino-cli expects local project files to be either in the sketch directory itself or inside a `src` subdirectory *of the sketch directory*.
+// If `src/` is at the root of `/home/netha/Projects/µMamba`, and `firmware/umamba/umamba.ino` is the sketch, `arduino-cli compile` won't find `src/` automatically.
+// Wait, the user specified:
+// umamba/
+//     firmware/umamba/umamba.ino
+//     src/...
+//     include/...
+// Arduino CLI doesn't natively support this without a custom Makefile or linking, OR we can tell Arduino-CLI to treat the root as the sketch? No, a sketch is a folder containing a .ino of the same name.
+// Let's create a symbolic link in the sketch folder to `src` and `include`, or we can just move `src` and `include` into `firmware/umamba/`.
+// But the user's requested architecture is explicit:
+// umamba/
+//     firmware/
+//         umamba/
+//             umamba.ino
+//     src/
+//         tensor.h ...
+//     include/
+//         config.h
+// The best way to handle this in standard Arduino is to make `src` and `include` an Arduino library, or use a Makefile, or symlink them inside the sketch.
+// Let's symlink them in the firmware directory for Arduino CLI to find them.
+

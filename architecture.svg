@@ -1,0 +1,128 @@
+<svg width="840" height="420" viewBox="0 0 840 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap');
+    text { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+    .title { font-family: 'Instrument Serif', serif; font-size: 24px; fill: #2d3142; }
+    .node-label { font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 600; fill: #2d3142; text-anchor: middle; }
+    .sublabel { font-family: 'Geist Mono', monospace; font-size: 9px; fill: #4f5d75; text-anchor: middle; }
+    .aside { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 14px; fill: #4f5d75; }
+    .eyebrow { font-family: 'Geist Mono', monospace; font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; fill: #4f5d75; text-anchor: middle; }
+  </style>
+
+  <defs>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.9" fill="rgba(45,49,66,0.10)"/>
+    </pattern>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/>
+    </marker>
+    <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/>
+    </marker>
+  </defs>
+
+  <!-- Base Paper -->
+  <rect width="100%" height="100%" fill="#f5f5f5"/>
+  <rect width="100%" height="100%" fill="url(#dots)" opacity="0.6"/>
+
+  <!-- Title -->
+  <text x="40" y="50" class="title">µMamba Architecture</text>
+  <text x="40" y="70" class="aside">Single-token forward pass in the C++ runtime</text>
+
+  <!-- Zone: Mamba Block -->
+  <rect x="220" y="80" width="380" height="300" rx="8" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/>
+  <rect x="375" y="84" width="70" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="410" y="93" class="eyebrow">TINY MAMBA BLOCK</text>
+
+  <!-- Zone: SSM Core -->
+  <rect x="430" y="125" width="140" height="110" rx="8" fill="rgba(235,108,54,0.05)" stroke="rgba(235,108,54,0.50)" stroke-width="1.2" stroke-dasharray="4,4"/>
+  <rect x="470" y="129" width="60" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="500" y="138" class="eyebrow" fill="#eb6c36">SELECTIVE SSM</text>
+
+  <!-- Input Node -->
+  <rect x="60" y="210" width="100" height="40" rx="4" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="110" y="229" class="node-label">Embedding</text>
+  <text x="110" y="242" class="sublabel">D_MODEL = 16</text>
+
+  <!-- Projection: In -->
+  <rect x="240" y="160" width="80" height="40" rx="4" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="280" y="180" class="node-label">Linear In</text>
+  <text x="280" y="193" class="sublabel">x_inner</text>
+
+  <!-- Projection: Gate -->
+  <rect x="240" y="280" width="80" height="40" rx="4" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="280" y="300" class="node-label">Linear Gate</text>
+  <text x="280" y="313" class="sublabel">z_inner</text>
+
+  <!-- Conv1D -->
+  <rect x="340" y="160" width="70" height="40" rx="4" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="375" y="180" class="node-label">Conv1D</text>
+  <text x="375" y="193" class="sublabel">k = 4</text>
+
+  <!-- Focal SSM Nodes -->
+  <rect x="450" y="155" width="100" height="30" rx="4" fill="rgba(235,108,54,0.15)" stroke="#eb6c36" stroke-width="1"/>
+  <text x="500" y="174" class="node-label" fill="#a83c12">Exp(dt * A)</text>
+  
+  <rect x="450" y="195" width="100" height="30" rx="4" fill="rgba(235,108,54,0.15)" stroke="#eb6c36" stroke-width="1"/>
+  <text x="500" y="214" class="node-label" fill="#a83c12">State Update</text>
+
+  <!-- Gating SiLU -->
+  <rect x="360" y="280" width="50" height="40" rx="4" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="385" y="304" class="node-label">SiLU</text>
+
+  <!-- Gating Multiplier -->
+  <circle cx="500" cy="300" r="14" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <path d="M492 292 L508 308 M492 308 L508 292" stroke="#2d3142" stroke-width="1.2"/>
+
+  <!-- Output Projection -->
+  <rect x="630" y="280" width="80" height="40" rx="4" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="670" y="300" class="node-label">Linear Out</text>
+  <text x="670" y="313" class="sublabel">D_INNER</text>
+
+  <!-- LM Head Node -->
+  <rect x="740" y="280" width="80" height="40" rx="4" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="780" y="300" class="node-label">LM Head</text>
+  <text x="780" y="313" class="sublabel">Logits</text>
+
+  <!-- ARROWS -->
+
+  <!-- Input to Embedding (Virtual) -->
+  <path d="M20 230 H 52" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="35" y="222" class="sublabel">id</text>
+
+  <!-- Embedding to Split -->
+  <!-- Split into In and Gate -->
+  <path d="M160 230 H 200 Q 208 230 208 222 V 188 Q 208 180 216 180 H 232" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M160 230 H 200 Q 208 230 208 238 V 292 Q 208 300 216 300 H 232" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Linear In to Conv1D -->
+  <path d="M320 180 H 332" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+  
+  <!-- Conv1D to SSM -->
+  <path d="M410 180 H 442" fill="none" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+  
+  <!-- Exp to State Update -->
+  <path d="M500 185 V 187" fill="none" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+
+  <!-- State Update to Multiplier -->
+  <path d="M500 225 V 278" fill="none" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+
+  <!-- Gate to SiLU -->
+  <path d="M320 300 H 352" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- SiLU to Multiplier -->
+  <path d="M410 300 H 478" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Multiplier to Linear Out -->
+  <path d="M514 300 H 622" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Linear Out to LM Head -->
+  <path d="M710 300 H 732" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Callouts (Annotation) -->
+  <path d="M550 170 Q 580 170 580 150" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="2,2"/>
+  <text x="585" y="152" class="aside">Hardware FPU</text>
+  <text x="585" y="167" class="aside">Taylor Approximation</text>
+
+</svg>
+

@@ -30,9 +30,7 @@ The model is built on a streamlined, microcontroller-friendly interpretation of 
 
 *Editorial visualization of the µMamba Inference Pipeline:*
 
-<div align="center">
-  <img src="architecture.svg" alt="µMamba Architecture Diagram" width="840">
-</div>
+![µMamba Architecture Diagram](architecture.svg)
 
 ---
 
